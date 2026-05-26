@@ -2,15 +2,52 @@
    package-detail.css — Styles for /packages/{slug}
    ═══════════════════════════════════════════════════ */
 
+/* ── BREADCRUMB SECTION ── */
+.breadcrumb-section {
+    padding-top: 88px; /* Clear the fixed navbar space */
+    padding-bottom: 0.75rem;
+    background: var(--off-white);
+    border-bottom: 1.5px solid var(--border);
+}
+
+.detail-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.detail-breadcrumb a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color 0.2s;
+}
+
+.detail-breadcrumb a:hover {
+    color: var(--blue-mid);
+}
+
+.detail-breadcrumb i {
+    color: var(--muted);
+    font-size: 0.65rem;
+}
+
+.detail-breadcrumb span {
+    color: var(--dark);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
 /* ── DETAIL HERO ── */
 .detail-hero {
     position: relative;
-    min-height: 85vh;
+    min-height: 55vh; /* Reduced height as breadcrumb is moved outside */
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
     background-size: cover;
     background-position: center;
-    padding-top: 110px;
 }
 
 .detail-hero-overlay {
@@ -18,8 +55,8 @@
     inset: 0;
     background: linear-gradient(
         to bottom,
-        rgba(0, 20, 60, 0.45) 0%,
-        rgba(0, 40, 100, 0.55) 40%,
+        rgba(0, 20, 60, 0.35) 0%,
+        rgba(0, 40, 100, 0.45) 50%,
         rgba(0, 10, 40, 0.85) 100%
     );
 }
@@ -27,48 +64,9 @@
 .detail-hero-content {
     position: relative;
     z-index: 2;
-    padding-bottom: 1.5rem;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    padding-top: 2.5rem;
+    padding-bottom: 1.75rem;
     width: 100%;
-}
-
-/* Breadcrumb */
-.detail-breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-bottom: auto;
-    padding: 0.45rem 1.1rem;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-radius: 100px;
-    width: fit-content;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.detail-breadcrumb a {
-    color: rgba(255, 255, 255, 0.65);
-    text-decoration: none;
-    font-size: 0.78rem;
-    transition: color 0.2s;
-}
-
-.detail-breadcrumb a:hover { color: white; }
-
-.detail-breadcrumb i {
-    color: rgba(255, 255, 255, 0.35);
-    font-size: 0.6rem;
-}
-
-.detail-breadcrumb span {
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 0.78rem;
-    font-weight: 500;
 }
 
 /* Hero Body */
@@ -194,7 +192,8 @@
     z-index: 3;
     display: flex;
     gap: 10px;
-    padding: 1rem 2rem;
+    --photo-strip-pad: max(0.75rem, calc((100% - 1320px) / 2 + 0.75rem));
+    padding: 1rem var(--photo-strip-pad);
     overflow-x: auto;
     scrollbar-width: none;
     background: rgba(0,0,0,0.3);
@@ -246,7 +245,8 @@
 
 /* ── DETAIL LAYOUT ── */
 .detail-layout {
-    padding: 3.5rem 0 5rem;
+    padding-top: 3.5rem;
+    padding-bottom: 5rem;
 }
 
 /* Quick Stats */
@@ -1036,14 +1036,31 @@
 }
 
 /* ── RESPONSIVE ── */
+@media (max-width: 1400px) {
+    .detail-hero-photos {
+        --photo-strip-pad: max(0.75rem, calc((100% - 1140px) / 2 + 0.75rem));
+    }
+}
+
+@media (max-width: 1200px) {
+    .detail-hero-photos {
+        --photo-strip-pad: max(0.75rem, calc((100% - 960px) / 2 + 0.75rem));
+    }
+}
+
 @media (max-width: 991px) {
     .detail-hero-body { flex-direction: column; align-items: flex-start; }
     .detail-hero-price-box { width: 100%; max-width: 340px; }
-    .detail-hero { min-height: 70vh; }
+    .detail-hero { min-height: 60vh; }
+    .detail-hero-photos { --photo-strip-pad: 0.75rem; }
+    .breadcrumb-section { padding-top: 80px; }
 }
 
 @media (max-width: 767px) {
     .detail-hero-price-box { max-width: 100%; }
     .booking-field-row { grid-template-columns: 1fr; }
     .highlight-grid { grid-template-columns: 1fr; }
+    .detail-hero-photos { --photo-strip-pad: 0.75rem; }
+    .breadcrumb-section { padding-top: 72px; }
+    .detail-hero { min-height: 50vh; }
 }

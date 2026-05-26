@@ -11,7 +11,7 @@
         rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-    <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}?v=1.1" />
+    <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}?v=1.3" />
 </head>
 
 <body>
@@ -27,6 +27,7 @@
             <li><a href="#about">Tentang Kami</a></li>
             <li><a href="#gallery">Galeri</a></li>
             <li><a href="#why-us">Keunggulan</a></li>
+            <li class="nav-btn-mobile-wrapper"><a href="#contact" class="btn-nav-mobile">Hubungi Kami</a></li>
         </ul>
         <a href="#contact" class="btn-nav">Hubungi Kami</a>
         <button class="navbar-toggler-west" onclick="toggleMenu()" aria-label="Menu">
@@ -654,12 +655,10 @@
         // Mobile menu
         function toggleMenu() {
             const links = document.querySelector('.nav-links');
-            const btn = document.querySelector('.btn-nav');
             if (!links) return;
             const open = links.style.display === 'flex';
             links.style.cssText = open ? '' :
-                'display:flex;flex-direction:column;position:fixed;top:68px;left:0;right:0;background:rgba(255,255,255,0.97);backdrop-filter:blur(16px);padding:2rem;gap:1.5rem;z-index:999;box-shadow:0 8px 30px rgba(0,87,184,0.1);';
-            if (btn) btn.style.display = open ? 'none' : 'block';
+                'display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(255,255,255,0.97);backdrop-filter:blur(16px);padding:1.75rem 1.5rem;gap:1.25rem;z-index:999;box-shadow:0 10px 30px rgba(0,87,184,0.08);border-top:1.5px solid var(--border);';
         }
 
         // Package filter

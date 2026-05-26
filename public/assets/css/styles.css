@@ -127,7 +127,7 @@ footer .brand span {
     display: flex;
     gap: 2.5rem;
     list-style: none;
-    padding-left: 0 !important;
+    padding-left: 0;
 }
 
 .nav-links a {
@@ -219,7 +219,23 @@ footer .brand span {
     background: var(--dark);
 }
 
+/* Desktop: hide mobile contact button wrapper */
+.nav-btn-mobile-wrapper {
+    display: none;
+}
+
 @media (max-width: 768px) {
+    .navbar-west {
+        padding: 1rem 1.5rem !important;
+    }
+
+    .navbar-west.scrolled {
+        position: fixed !important;
+        top: 0 !important;
+        z-index: 1000 !important;
+        padding: 0.75rem 1.5rem !important;
+    }
+
     .nav-links,
     .btn-nav {
         display: none;
@@ -228,6 +244,67 @@ footer .brand span {
     .navbar-toggler-west {
         display: flex;
     }
+
+    /* Mobile dropdown styling */
+    .nav-links li {
+        width: 100%;
+        text-align: left;
+    }
+
+    .nav-links li a {
+        display: block;
+        padding: 0.5rem 0;
+        font-size: 0.95rem;
+        color: var(--dark) !important;
+    }
+
+    .nav-links li a::after {
+        display: none !important; /* Hide desktop underlines on mobile */
+    }
+
+    /* Mobile Contact Button */
+    .nav-btn-mobile-wrapper {
+        display: block;
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    .nav-links li a.btn-nav-mobile {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 0.75rem 1.5rem;
+        background: var(--blue-deep) !important;
+        color: white !important;
+        border-radius: 100px;
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 600;
+        box-shadow: 0 4px 16px rgba(0, 87, 184, 0.15);
+        transition: all 0.25s;
+    }
+
+    .nav-links li a.btn-nav-mobile:hover {
+        background: var(--blue-mid) !important;
+        color: white !important;
+        transform: translateY(-1px);
+    }
+}
+
+/* ── MOBILE NAVBAR FIX ── */
+.navbar-west {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000 !important;
+
+    position: fixed !important;
+    top: 0 !important;
+    left: 0;
+    right: 0;
+    z-index: 1000 !important;
 }
 
 /* ── HERO ── */
