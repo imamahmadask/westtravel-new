@@ -1,42 +1,17 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts.app', [
+    'title' => 'Paket Wisata — WestTravel.id | Lombok, Sumbawa & Dunia',
+    'activeNav' => 'packages',
+])
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Paket Wisata — WestTravel.id | Lombok, Sumbawa & Dunia</title>
+@section('meta')
     <meta name="description" content="Temukan paket wisata terbaik ke Lombok, Sumbawa, dan destinasi internasional bersama WestTravel.id. Harga terjangkau, pengalaman tak terlupakan." />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap"
-        rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}?v=1.3" />
+@endsection
+
+@push('styles')
     <link rel="stylesheet" href="{{ asset('assets/css/packages.css') }}" />
-</head>
+@endpush
 
-<body>
-
-    <!-- ═══ NAVBAR ═══ -->
-    <nav class="navbar-west scrolled" id="mainNav">
-        <a href="{{ url('/') }}" class="brand">
-            <img id="navbar-logo" src="{{ asset('assets/img/logo2.png') }}" alt="westtravel" width="200" 
-                 data-original="{{ asset('assets/img/logo.png') }}" 
-                 data-scrolled="{{ asset('assets/img/logo2.png') }}">
-        </a>
-        <ul class="nav-links">
-            <li><a href="{{ url('/packages') }}" class="active-nav">Paket Wisata</a></li>
-            <li><a href="{{ url('/') }}#about">Tentang Kami</a></li>
-            <li><a href="{{ url('/') }}#gallery">Galeri</a></li>
-            <li><a href="{{ url('/') }}#why-us">Keunggulan</a></li>
-            <li class="nav-btn-mobile-wrapper"><a href="{{ url('/') }}#contact" class="btn-nav-mobile">Hubungi Kami</a></li>
-        </ul>
-        <a href="{{ url('/') }}#contact" class="btn-nav">Hubungi Kami</a>
-        <button class="navbar-toggler-west" onclick="toggleMenu()" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
-    </nav>
-
+@section('content')
     <!-- ═══ PAGE HERO ═══ -->
     <section class="page-hero">
         <div class="page-hero-bg"></div>
@@ -438,136 +413,58 @@
         </div>
     </section>
 
-    <!-- ═══ FOOTER ═══ -->
-    <footer>
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-4">
-                    <a href="{{ url('/') }}" class="brand">West<span>Travel</span>.id</a>
-                    <p class="footer-desc">Agen perjalanan wisata terpercaya di Lombok dan Sumbawa. Menghadirkan pengalaman tak terlupakan sejak 2016.</p>
-                    <div class="social-links mt-4">
-                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                        <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-2">
-                    <h5>Paket Wisata</h5>
-                    <ul>
-                        <li><a href="#">Gili Islands</a></li>
-                        <li><a href="#">Rinjani Trek</a></li>
-                        <li><a href="#">Lombok Tour</a></li>
-                        <li><a href="#">Sumbawa</a></li>
-                        <li><a href="#">Pulau Moyo</a></li>
-                        <li><a href="#">Luar Negeri</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-6 col-lg-2">
-                    <h5>Perusahaan</h5>
-                    <ul>
-                        <li><a href="{{ url('/') }}#about">Tentang Kami</a></li>
-                        <li><a href="{{ url('/') }}#why-us">Keunggulan</a></li>
-                        <li><a href="{{ url('/') }}#gallery">Galeri</a></li>
-                        <li><a href="#">Blog & Tips</a></li>
-                        <li><a href="{{ url('/') }}#contact">Kontak</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4">
-                    <h5>Newsletter</h5>
-                    <p style="font-size:0.83rem; margin-bottom:1rem;">Dapatkan promo dan inspirasi wisata terbaru langsung di inbox Anda.</p>
-                    <div class="newsletter-wrap">
-                        <input type="email" placeholder="Email Anda..." />
-                        <button>Daftar</button>
-                    </div>
-                    <p style="font-size:0.75rem; margin-top:0.65rem; opacity:0.5;">✓ Tanpa spam. Unsubscribe kapanpun.</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2025 WestTravel.id — All rights reserved.</p>
-                <p>
-                    <a href="#" style="margin-right:1.5rem;">Kebijakan Privasi</a>
-                    <a href="#">Syarat & Ketentuan</a>
-                </p>
-            </div>
-        </div>
-    </footer>
+@endsection
 
-    <!-- WhatsApp Float -->
-    <a href="https://wa.me/6281234567890?text=Halo%20WestTravel%2C%20saya%20ingin%20info%20paket%20wisata"
-        class="whatsapp-float" target="_blank" title="Chat WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+@push('scripts')
+<script>
+    // All package items
+    const allItems = document.querySelectorAll('.package-item');
+    const noResult = document.getElementById('noResult');
+    const resultCount = document.getElementById('resultCount');
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Navbar scroll
-        const nav = document.getElementById('mainNav');
-        const logo = document.getElementById('navbar-logo');
+    function updateCount() {
+        const visible = [...allItems].filter(el => el.style.display !== 'none');
+        resultCount.textContent = visible.length;
+        if(noResult) noResult.classList.toggle('hidden', visible.length > 0);
+    }
 
-        function handleNavbarScroll() {
-            const isScrolled = window.scrollY > 60;
-            nav.classList.toggle('scrolled', isScrolled);
-            if (logo) {
-                logo.src = isScrolled ? logo.dataset.scrolled : logo.dataset.original;
-            }
-        }
+    // Package filter
+    let currentFilter = 'all';
+    let currentSearch = '';
 
-        window.addEventListener('scroll', handleNavbarScroll);
-        handleNavbarScroll(); // Run on page load/refresh
-
-        // Mobile menu
-        function toggleMenu() {
-            const links = document.querySelector('.nav-links');
-            if (!links) return;
-            const open = links.style.display === 'flex';
-            links.style.cssText = open ? '' :
-                'display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(255,255,255,0.97);backdrop-filter:blur(16px);padding:1.75rem 1.5rem;gap:1.25rem;z-index:999;box-shadow:0 10px 30px rgba(0,87,184,0.08);border-top:1.5px solid var(--border);';
-        }
-
-        // All package items
-        const allItems = document.querySelectorAll('.package-item');
-        const noResult = document.getElementById('noResult');
-        const resultCount = document.getElementById('resultCount');
-
-        function updateCount() {
-            const visible = [...allItems].filter(el => el.style.display !== 'none');
-            resultCount.textContent = visible.length;
-            noResult.classList.toggle('hidden', visible.length > 0);
-        }
-
-        // Package filter
-        let currentFilter = 'all';
-        let currentSearch = '';
-
-        function applyFilters() {
-            allItems.forEach(item => {
-                const matchCat = currentFilter === 'all' || item.dataset.cat === currentFilter;
-                const name = item.querySelector('h3').textContent.toLowerCase();
-                const desc = item.querySelector('.pkg-desc').textContent.toLowerCase();
-                const matchSearch = currentSearch === '' || name.includes(currentSearch) || desc.includes(currentSearch);
-                item.style.display = (matchCat && matchSearch) ? '' : 'none';
-            });
-            updateCount();
-        }
-
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentFilter = btn.dataset.filter;
-                applyFilters();
-            });
+    function applyFilters() {
+        allItems.forEach(item => {
+            const matchCat = currentFilter === 'all' || item.dataset.cat === currentFilter;
+            const name = item.querySelector('h3').textContent.toLowerCase();
+            const desc = item.querySelector('.pkg-desc').textContent.toLowerCase();
+            const matchSearch = currentSearch === '' || name.includes(currentSearch) || desc.includes(currentSearch);
+            item.style.display = (matchCat && matchSearch) ? '' : 'none';
         });
+        updateCount();
+    }
 
-        // Search
-        document.getElementById('searchInput').addEventListener('input', e => {
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.dataset.filter;
+            applyFilters();
+        });
+    });
+
+    // Search
+    const searchInput = document.getElementById('searchInput');
+    if(searchInput) {
+        searchInput.addEventListener('input', e => {
             currentSearch = e.target.value.toLowerCase().trim();
             applyFilters();
         });
+    }
 
-        // Sort
-        document.getElementById('sortSelect').addEventListener('change', e => {
+    // Sort
+    const sortSelect = document.getElementById('sortSelect');
+    if(sortSelect) {
+        sortSelect.addEventListener('change', e => {
             const grid = document.getElementById('packagesGrid');
             const items = [...document.querySelectorAll('.package-item')];
             items.sort((a, b) => {
@@ -581,54 +478,53 @@
             });
             items.forEach(item => grid.appendChild(item));
         });
+    }
 
-        // Reset filter
-        function resetFilter() {
-            currentFilter = 'all';
-            currentSearch = '';
-            document.getElementById('searchInput').value = '';
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            document.querySelector('[data-filter="all"]').classList.add('active');
-            applyFilters();
-        }
+    // Reset filter
+    window.resetFilter = function() {
+        currentFilter = 'all';
+        currentSearch = '';
+        if(searchInput) searchInput.value = '';
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        const allBtn = document.querySelector('[data-filter="all"]');
+        if(allBtn) allBtn.classList.add('active');
+        applyFilters();
+    }
 
-        // View toggle
-        const grid = document.getElementById('packagesGrid');
-        document.getElementById('viewGrid').addEventListener('click', function() {
+    // View toggle
+    const grid = document.getElementById('packagesGrid');
+    const viewGrid = document.getElementById('viewGrid');
+    const viewList = document.getElementById('viewList');
+    
+    if(viewGrid && viewList) {
+        viewGrid.addEventListener('click', function() {
             this.classList.add('active');
-            document.getElementById('viewList').classList.remove('active');
+            viewList.classList.remove('active');
             grid.classList.remove('list-view');
             allItems.forEach(item => {
                 item.className = item.className.replace(/col-\d+/g, '').trim();
                 item.classList.add('col-md-6', 'col-lg-4');
             });
         });
-        document.getElementById('viewList').addEventListener('click', function() {
+        viewList.addEventListener('click', function() {
             this.classList.add('active');
-            document.getElementById('viewGrid').classList.remove('active');
+            viewGrid.classList.remove('active');
             grid.classList.add('list-view');
             allItems.forEach(item => {
                 item.classList.remove('col-md-6', 'col-lg-4');
                 item.classList.add('col-12');
             });
         });
+    }
 
-        // Wishlist toggle
-        document.querySelectorAll('.pkg-wishlist').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const icon = btn.querySelector('i');
-                icon.classList.toggle('far');
-                icon.classList.toggle('fas');
-                icon.style.color = icon.classList.contains('fas') ? '#e74c3c' : '';
-            });
+    // Wishlist toggle
+    document.querySelectorAll('.pkg-wishlist').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const icon = btn.querySelector('i');
+            icon.classList.toggle('far');
+            icon.classList.toggle('fas');
+            icon.style.color = icon.classList.contains('fas') ? '#e74c3c' : '';
         });
-
-        // Scroll reveal
-        const obs = new IntersectionObserver(entries => {
-            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
-    </script>
-
-</body>
-</html>
+    });
+</script>
+@endpush

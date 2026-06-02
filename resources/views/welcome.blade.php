@@ -1,40 +1,6 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WestTravel.id — Jelajahi Lombok, Sumbawa & Dunia</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap"
-        rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-    <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}?v=1.3" />
-</head>
-
-<body>
-
-    <!-- ═══ NAVBAR ═══ -->
-    <nav class="navbar-west" id="mainNav">
-        <a href="#" class="brand">
-            <img id="navbar-logo" src="{{ asset('assets/img/logo.png') }}" alt="westtravel" width="200"
-                data-original="{{ asset('assets/img/logo.png') }}" data-scrolled="{{ asset('assets/img/logo2.png') }}">
-        </a>
-        <ul class="nav-links">
-            <li><a href="#packages">Paket Wisata</a></li>
-            <li><a href="#about">Tentang Kami</a></li>
-            <li><a href="#gallery">Galeri</a></li>
-            <li><a href="#why-us">Keunggulan</a></li>
-            <li class="nav-btn-mobile-wrapper"><a href="#contact" class="btn-nav-mobile">Hubungi Kami</a></li>
-        </ul>
-        <a href="#contact" class="btn-nav">Hubungi Kami</a>
-        <button class="navbar-toggler-west" onclick="toggleMenu()" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
-    </nav>
-
+@section('content')
     <!-- ═══ HERO ═══ -->
     <section id="hero">
         <div class="hero-bg"></div>
@@ -571,131 +537,33 @@
         </div>
     </section>
 
-    <!-- ═══ FOOTER ═══ -->
-    <footer>
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-4">
-                    <a href="#" class="brand">West<span>Travel</span>.id</a>
-                    <p class="footer-desc">Agen perjalanan wisata terpercaya di Lombok dan Sumbawa. Menghadirkan
-                        pengalaman tak terlupakan sejak 2016.</p>
-                    <div class="social-links mt-4">
-                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                        <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-2">
-                    <h5>Paket Wisata</h5>
-                    <ul>
-                        <li><a href="#">Gili Islands</a></li>
-                        <li><a href="#">Rinjani Trek</a></li>
-                        <li><a href="#">Lombok Tour</a></li>
-                        <li><a href="#">Sumbawa</a></li>
-                        <li><a href="#">Pulau Moyo</a></li>
-                        <li><a href="#">Luar Negeri</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-6 col-lg-2">
-                    <h5>Perusahaan</h5>
-                    <ul>
-                        <li><a href="#about">Tentang Kami</a></li>
-                        <li><a href="#why-us">Keunggulan</a></li>
-                        <li><a href="#gallery">Galeri</a></li>
-                        <li><a href="#">Blog & Tips</a></li>
-                        <li><a href="#contact">Kontak</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4">
-                    <h5>Newsletter</h5>
-                    <p style="font-size:0.83rem; margin-bottom:1rem;">Dapatkan promo dan inspirasi wisata terbaru
-                        langsung di inbox Anda.</p>
-                    <div class="newsletter-wrap">
-                        <input type="email" placeholder="Email Anda..." />
-                        <button>Daftar</button>
-                    </div>
-                    <p style="font-size:0.75rem; margin-top:0.65rem; opacity:0.5;">✓ Tanpa spam. Unsubscribe kapanpun.
-                    </p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2025 WestTravel.id — All rights reserved.</p>
-                <p>
-                    <a href="#" style="margin-right:1.5rem;">Kebijakan Privasi</a>
-                    <a href="#">Syarat & Ketentuan</a>
-                </p>
-            </div>
-        </div>
-    </footer>
+@endsection
 
-    <!-- WhatsApp Float -->
-    <a href="https://wa.me/6281234567890?text=Halo%20WestTravel%2C%20saya%20ingin%20info%20paket%20wisata"
-        class="whatsapp-float" target="_blank" title="Chat WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Navbar scroll
-        const nav = document.getElementById('mainNav');
-        const logo = document.getElementById('navbar-logo');
-
-        function handleNavbarScroll() {
-            const isScrolled = window.scrollY > 60;
-            nav.classList.toggle('scrolled', isScrolled);
-            if (logo) {
-                logo.src = isScrolled ? logo.dataset.scrolled : logo.dataset.original;
-            }
-        }
-
-        window.addEventListener('scroll', handleNavbarScroll);
-        handleNavbarScroll(); // Run on page load/refresh
-
-        // Mobile menu
-        function toggleMenu() {
-            const links = document.querySelector('.nav-links');
-            if (!links) return;
-            const open = links.style.display === 'flex';
-            links.style.cssText = open ? '' :
-                'display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(255,255,255,0.97);backdrop-filter:blur(16px);padding:1.75rem 1.5rem;gap:1.25rem;z-index:999;box-shadow:0 10px 30px rgba(0,87,184,0.08);border-top:1.5px solid var(--border);';
-        }
-
-        // Package filter
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const f = btn.dataset.filter;
-                document.querySelectorAll('.package-item').forEach(item => {
-                    item.style.display = (f === 'all' || item.dataset.cat === f) ? '' : 'none';
-                });
+@push('scripts')
+<script>
+    // Package filter
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const f = btn.dataset.filter;
+            document.querySelectorAll('.package-item').forEach(item => {
+                item.style.display = (f === 'all' || item.dataset.cat === f) ? '' : 'none';
             });
         });
+    });
 
-        // Scroll reveal
-        const obs = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                if (e.isIntersecting) e.target.classList.add('visible');
-            });
-        }, {
-            threshold: 0.1
-        });
-        document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
-
-        // Form submit
-        function submitForm(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('.btn-submit');
-            btn.innerHTML = '<i class="fas fa-check me-2"></i>Pesan Terkirim!';
-            btn.style.background = '#1A7FD4';
-            setTimeout(() => {
-                btn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Kirim Pesan';
-                btn.style.background = '';
-                e.target.reset();
-            }, 3000);
-        }
-    </script>
-</body>
-
-</html>
+    // Form submit
+    function submitForm(e) {
+        e.preventDefault();
+        const btn = e.target.querySelector('.btn-submit');
+        btn.innerHTML = '<i class="fas fa-check me-2"></i>Pesan Terkirim!';
+        btn.style.background = '#1A7FD4';
+        setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Kirim Pesan';
+            btn.style.background = '';
+            e.target.reset();
+        }, 3000);
+    }
+</script>
+@endpush
