@@ -676,6 +676,7 @@ Route::get('/packages', function () {
     return view('packages');
 });
 
+// Alias route: /packages/{slug} → same package detail view
 Route::get('/packages/{slug}', function ($slug) use ($packagesData) {
     if (!isset($packagesData[$slug])) {
         abort(404);
