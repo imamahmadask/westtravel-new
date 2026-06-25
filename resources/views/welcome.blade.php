@@ -6,9 +6,8 @@
         <div class="hero-bg"></div>
         <div class="hero-content">
             <span class="hero-eyebrow">✦ Lombok · Sumbawa · International</span>
-            <h1>Jelajahi <em>Keindahan</em><br>Nusa Tenggara</h1>
-            <p>Pengalaman perjalanan tak terlupakan bersama pemandu lokal terpercaya. Dari Gili Trawangan hingga Pulau
-                Moyo — kami antar Anda ke surga tersembunyi.</p>
+            <h1>West Travel <em>Indonesia</em></h1>
+            <h3>Wander Without Worry</h3>
             <div class="hero-cta">
                 <a href="#packages" class="btn-hero-primary"><i class="fas fa-map-marked-alt me-2"></i>Lihat Paket
                     Wisata</a>
@@ -89,168 +88,38 @@
                 </div>
             </div>
             <div class="row g-4" id="packagesGrid">
-                <!-- Card 1 -->
-                <div class="col-md-6 col-lg-4 fade-up package-item" data-cat="lombok">
+                @foreach($packages as $idx => $pkg)
+                <div class="col-md-6 col-lg-4 fade-up package-item" data-cat="{{ $pkg->category->slug ?? 'lombok' }}" style="transition-delay:{{ ($idx % 3) * 0.1 }}s">
                     <div class="package-card">
                         <div class="package-img">
-                            <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=700&q=80"
-                                alt="Gili Islands" loading="lazy" />
-                            <span class="pkg-badge pkg-badge-lombok">Lombok</span>
-                            <span class="pkg-duration"><i class="fas fa-moon me-1"></i>3H / 2M</span>
+                            @if(is_array($pkg->images) && count($pkg->images) > 0)
+                                <img src="{{ Storage::url($pkg->images[0]) }}" alt="{{ $pkg->title }}" loading="lazy" />
+                            @else
+                                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=700&q=80" alt="{{ $pkg->title }}" loading="lazy" />
+                            @endif
+                            <span class="pkg-badge pkg-badge-{{ $pkg->category->slug ?? 'lombok' }}">{{ $pkg->category->name ?? 'Lombok' }}</span>
+                            <span class="pkg-duration"><i class="fas fa-moon me-1"></i>{{ $pkg->type }}</span>
                         </div>
                         <div class="package-body">
-                            <h3>Gili Islands Getaway</h3>
-                            <p class="pkg-desc">Nikmati keindahan tiga Gili yang ikonik — Trawangan, Meno, dan Air.
-                                Snorkeling, sunset, dan ketenangan pantai tropis.</p>
+                            <h3>{{ $pkg->title }}</h3>
+                            <p class="pkg-desc">{{ \Illuminate\Support\Str::limit(strip_tags($pkg->description), 120) }}</p>
                             <ul class="pkg-highlights">
-                                <li>Hotel Bintang 3</li>
-                                <li>Snorkeling</li>
-                                <li>Boat Transfer</li>
-                                <li>Tour Guide</li>
+                                <li>Min {{ $pkg->min_pax }} Pax</li>
+                                <li>{{ $pkg->location }}</li>
+                                <li>{{ is_array($pkg->country) ? implode(', ', $pkg->country) : $pkg->country }}</li>
                             </ul>
                             <div class="pkg-footer">
-                                <div class="pkg-price"><span class="from">Mulai dari</span><span class="amount">Rp
-                                        1,8 Jt</span><span class="per">/orang</span></div>
-                                <a href="{{ url('/packages/gili-islands') }}" class="btn-pkg">Detail →</a>
+                                <div class="pkg-price">
+                                    <span class="from">Mulai dari</span>
+                                    <span class="amount">Rp {{ number_format($pkg->price / 1000000, 1, ',', '.') }} Jt</span>
+                                    <span class="per">/orang</span>
+                                </div>
+                                <a href="{{ url('/packages/' . $pkg->slug) }}" class="btn-pkg">Detail →</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Card 2 -->
-                <div class="col-md-6 col-lg-4 fade-up package-item" data-cat="lombok" style="transition-delay:.1s">
-                    <div class="package-card">
-                        <div class="package-img">
-                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=80"
-                                alt="Rinjani" loading="lazy" />
-                            <span class="pkg-badge pkg-badge-lombok">Lombok</span>
-                            <span class="pkg-duration"><i class="fas fa-moon me-1"></i>4H / 3M</span>
-                        </div>
-                        <div class="package-body">
-                            <h3>Pendakian Rinjani</h3>
-                            <p class="pkg-desc">Taklukkan puncak Gunung Rinjani 3.726 mdpl. Jelajahi Segara Anak dan
-                                danau kawah yang memukau.</p>
-                            <ul class="pkg-highlights">
-                                <li>Tenda Camping</li>
-                                <li>Porter</li>
-                                <li>Makan 3x/hari</li>
-                                <li>Rescue Kit</li>
-                            </ul>
-                            <div class="pkg-footer">
-                                <div class="pkg-price"><span class="from">Mulai dari</span><span class="amount">Rp
-                                        2,5 Jt</span><span class="per">/orang</span></div>
-                                <a href="{{ url('/packages/pendakian-rinjani') }}" class="btn-pkg">Detail →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card 3 -->
-                <div class="col-md-6 col-lg-4 fade-up package-item" data-cat="lombok" style="transition-delay:.2s">
-                    <div class="package-card">
-                        <div class="package-img">
-                            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80"
-                                alt="Lombok Tour" loading="lazy" />
-                            <span class="pkg-badge pkg-badge-lombok">Lombok</span>
-                            <span class="pkg-duration"><i class="fas fa-moon me-1"></i>5H / 4M</span>
-                        </div>
-                        <div class="package-body">
-                            <h3>Lombok Lengkap Tour</h3>
-                            <p class="pkg-desc">Paket lengkap menjelajahi Lombok — Mandalika, Desa Sade, Air Terjun
-                                Sendang Gile, hingga tenun Sukarara.</p>
-                            <ul class="pkg-highlights">
-                                <li>Hotel Bintang 4</li>
-                                <li>AC Vehicle</li>
-                                <li>Semua Entry</li>
-                                <li>Dokumentasi</li>
-                            </ul>
-                            <div class="pkg-footer">
-                                <div class="pkg-price"><span class="from">Mulai dari</span><span class="amount">Rp
-                                        3,2 Jt</span><span class="per">/orang</span></div>
-                                <a href="{{ url('/packages/lombok-lengkap') }}" class="btn-pkg">Detail →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card 4 -->
-                <div class="col-md-6 col-lg-4 fade-up package-item" data-cat="sumbawa" style="transition-delay:.1s">
-                    <div class="package-card">
-                        <div class="package-img">
-                            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=700&q=80"
-                                alt="Sumbawa" loading="lazy" />
-                            <span class="pkg-badge pkg-badge-sumbawa">Sumbawa</span>
-                            <span class="pkg-duration"><i class="fas fa-moon me-1"></i>4H / 3M</span>
-                        </div>
-                        <div class="package-body">
-                            <h3>Sumbawa Hidden Paradise</h3>
-                            <p class="pkg-desc">Temukan Sumbawa yang masih perawan — Pantai Maluk, Teluk Saleh, dan
-                                budaya Mbojo yang autentik.</p>
-                            <ul class="pkg-highlights">
-                                <li>Penginapan Lokal</li>
-                                <li>Boat Charter</li>
-                                <li>Snorkeling</li>
-                                <li>Guide Lokal</li>
-                            </ul>
-                            <div class="pkg-footer">
-                                <div class="pkg-price"><span class="from">Mulai dari</span><span class="amount">Rp
-                                        2,8 Jt</span><span class="per">/orang</span></div>
-                                <a href="{{ url('/packages/sumbawa-paradise') }}" class="btn-pkg">Detail →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card 5 -->
-                <div class="col-md-6 col-lg-4 fade-up package-item" data-cat="sumbawa" style="transition-delay:.2s">
-                    <div class="package-card">
-                        <div class="package-img">
-                            <img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=700&q=80"
-                                alt="Pulau Moyo" loading="lazy" />
-                            <span class="pkg-badge pkg-badge-sumbawa">Sumbawa</span>
-                            <span class="pkg-duration"><i class="fas fa-moon me-1"></i>3H / 2M</span>
-                        </div>
-                        <div class="package-body">
-                            <h3>Pulau Moyo Retreat</h3>
-                            <p class="pkg-desc">Pulau Moyo — destinasi eksklusif pernah dikunjungi Lady Diana. Air
-                                terjun, diving, dan hutan tropis memukau.</p>
-                            <ul class="pkg-highlights">
-                                <li>Glamping</li>
-                                <li>Diving</li>
-                                <li>Air Terjun</li>
-                                <li>Sunset Tour</li>
-                            </ul>
-                            <div class="pkg-footer">
-                                <div class="pkg-price"><span class="from">Mulai dari</span><span class="amount">Rp
-                                        3,5 Jt</span><span class="per">/orang</span></div>
-                                <a href="{{ url('/packages/pulau-moyo') }}" class="btn-pkg">Detail →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card 6 -->
-                <div class="col-md-6 col-lg-4 fade-up package-item" data-cat="intl" style="transition-delay:.3s">
-                    <div class="package-card">
-                        <div class="package-img">
-                            <img src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=700&q=80"
-                                alt="Thailand" loading="lazy" />
-                            <span class="pkg-badge pkg-badge-intl">Luar Negeri</span>
-                            <span class="pkg-duration"><i class="fas fa-moon me-1"></i>7H / 6M</span>
-                        </div>
-                        <div class="package-body">
-                            <h3>Thailand Grand Tour</h3>
-                            <p class="pkg-desc">Bangkok, Chiang Mai, dan Phuket dalam satu paket. Kuil megah, pasar
-                                apung, dan pantai Andaman yang jernih.</p>
-                            <ul class="pkg-highlights">
-                                <li>Tiket PP</li>
-                                <li>Hotel Bintang 4</li>
-                                <li>Guide Bahasa</li>
-                                <li>Semua Masuk</li>
-                            </ul>
-                            <div class="pkg-footer">
-                                <div class="pkg-price"><span class="from">Mulai dari</span><span class="amount">Rp
-                                        8,9 Jt</span><span class="per">/orang</span></div>
-                                <a href="{{ url('/packages/thailand-tour') }}" class="btn-pkg">Detail →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
             <div class="text-center mt-5 fade-up">
                 <a href="{{ url('/packages') }}" class="btn-outline-blue"><i class="fas fa-list me-2"></i>Lihat

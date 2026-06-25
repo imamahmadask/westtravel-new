@@ -127,7 +127,7 @@
                                 <span class="pkd-title-accent"></span>
                                 Tentang Paket Ini
                             </h2>
-                            <p class="pkd-long-desc">{{ $package['desc_long'] }}</p>
+                            <p class="pkd-long-desc">{!! $package['desc_long'] !!}</p>
                         </div>
 
                         {{-- Highlights --}}

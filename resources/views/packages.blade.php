@@ -42,13 +42,19 @@
                 <div class="pkg-filters">
                     <span class="filter-label"><i class="fas fa-sliders-h me-2"></i>Filter:</span>
                     <button class="filter-btn active" data-filter="all" id="filter-all">Semua</button>
-                    <button class="filter-btn" data-filter="lombok" id="filter-lombok">
+                    <button class="filter-btn" data-filter="lombok-package" id="filter-lombok">
                         <i class="fas fa-mountain me-1"></i>Lombok
                     </button>
-                    <button class="filter-btn" data-filter="sumbawa" id="filter-sumbawa">
+                    <button class="filter-btn" data-filter="gili-package" id="filter-gili">
+                        <i class="fas fa-mountain me-1"></i>Gili
+                    </button>
+                    <button class="filter-btn" data-filter="rinjani-package" id="filter-rinjani">
+                        <i class="fas fa-mountain me-1"></i>Rinjani
+                    </button>
+                    <button class="filter-btn" data-filter="sumbawa-package" id="filter-sumbawa">
                         <i class="fas fa-water me-1"></i>Sumbawa
                     </button>
-                    <button class="filter-btn" data-filter="intl" id="filter-intl">
+                    <button class="filter-btn" data-filter="international-package" id="filter-international">
                         <i class="fas fa-globe me-1"></i>Luar Negeri
                     </button>
                 </div>
@@ -66,7 +72,7 @@
 
             <!-- Result Count -->
             <div class="pkg-result-bar fade-up">
-                <p class="pkg-result-count"><span id="resultCount">9</span> paket ditemukan</p>
+                <p class="pkg-result-count"><span id="resultCount">{{ $packages->count() }}</span> paket ditemukan</p>
                 <div class="view-toggle">
                     <button class="view-btn active" id="viewGrid" title="Grid View"><i class="fas fa-th"></i></button>
                     <button class="view-btn" id="viewList" title="List View"><i class="fas fa-list"></i></button>
@@ -75,317 +81,47 @@
 
             <!-- Packages Grid -->
             <div class="row g-4" id="packagesGrid">
-
-                <!-- Card 1 -->
-                <div class="col-md-6 col-lg-4 fade-up package-item" data-cat="lombok" data-price="1800000" data-duration="3">
+                @foreach($packages as $idx => $pkg)
+                <div class="col-md-6 col-lg-4 fade-up package-item" data-cat="{{ $pkg->category->slug ?? 'lombok' }}" data-price="{{ $pkg->price }}" data-duration="{{ preg_match('/\d+/', $pkg->type, $matches) ? $matches[0] : 3 }}" style="transition-delay:{{ ($idx % 3) * 0.08 }}s">
                     <div class="package-card">
                         <div class="package-img">
-                            <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=700&q=80" alt="Gili Islands" loading="lazy" />
-                            <span class="pkg-badge pkg-badge-lombok">Lombok</span>
-                            <span class="pkg-duration"><i class="fas fa-moon me-1"></i>3H / 2M</span>
+                            @if(is_array($pkg->images) && count($pkg->images) > 0)
+                                <img src="{{ Storage::url($pkg->images[0]) }}" alt="{{ $pkg->title }}" loading="lazy" />
+                            @else
+                                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=700&q=80" alt="{{ $pkg->title }}" loading="lazy" />
+                            @endif
+                            <span class="pkg-badge pkg-badge-{{ $pkg->category->slug ?? 'lombok' }}">{{ $pkg->category->name ?? 'Lombok' }}</span>
+                            <span class="pkg-duration"><i class="fas fa-moon me-1"></i>{{ $pkg->type }}</span>
                             <button class="pkg-wishlist" title="Simpan ke Wishlist"><i class="far fa-heart"></i></button>
+                            @if($pkg->is_featured)
+                                <div class="pkg-popular-badge">🔥 Terpopuler</div>
+                            @endif
                         </div>
                         <div class="package-body">
                             <div class="pkg-rating">
                                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                <span>4.9 (128 ulasan)</span>
+                                <span>4.9 (120 ulasan)</span>
                             </div>
-                            <h3>Gili Islands Getaway</h3>
-                            <p class="pkg-desc">Nikmati keindahan tiga Gili yang ikonik — Trawangan, Meno, dan Air. Snorkeling, sunset, dan ketenangan pantai tropis.</p>
+                            <h3>{{ $pkg->title }}</h3>
+                            <p class="pkg-desc">{{ \Illuminate\Support\Str::limit(strip_tags($pkg->description), 120) }}</p>
                             <ul class="pkg-highlights">
-                                <li><i class="fas fa-hotel me-1"></i>Hotel Bintang 3</li>
-                                <li><i class="fas fa-fish me-1"></i>Snorkeling</li>
-                                <li><i class="fas fa-ship me-1"></i>Boat Transfer</li>
-                                <li><i class="fas fa-user-tie me-1"></i>Tour Guide</li>
+                                <li>Min {{ $pkg->min_pax }} Pax</li>
+                                <li>{{ $pkg->type }}</li>
+                                <li>{{ $pkg->location }}</li>
+                                <li>{{ is_array($pkg->country) ? implode(', ', $pkg->country) : $pkg->country }}</li>
                             </ul>
                             <div class="pkg-footer">
                                 <div class="pkg-price">
                                     <span class="from">Mulai dari</span>
-                                    <span class="amount">Rp 1,8 Jt</span>
+                                    <span class="amount">Rp {{ number_format($pkg->price / 1000000, 1, ',', '.') }} Jt</span>
                                     <span class="per">/orang</span>
                                 </div>
-                                <a href="{{ url('/packages/gili-islands') }}" class="btn-pkg">Detail →</a>
+                                <a href="{{ url('/packages/' . $pkg->slug) }}" class="btn-pkg">Detail →</a>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Card 2 -->
-                <div class="col-md-6 col-lg-4 fade-up package-item" data-cat="lombok" data-price="2500000" data-duration="4" style="transition-delay:.08s">
-                    <div class="package-card">
-                        <div class="package-img">
-                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=80" alt="Rinjani" loading="lazy" />
-                            <span class="pkg-badge pkg-badge-lombok">Lombok</span>
-                            <span class="pkg-duration"><i class="fas fa-moon me-1"></i>4H / 3M</span>
-                            <button class="pkg-wishlist" title="Simpan ke Wishlist"><i class="far fa-heart"></i></button>
-                            <div class="pkg-popular-badge">🔥 Terpopuler</div>
-                        </div>
-                        <div class="package-body">
-                            <div class="pkg-rating">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                <span>5.0 (94 ulasan)</span>
-                            </div>
-                            <h3>Pendakian Rinjani</h3>
-                            <p class="pkg-desc">Taklukkan puncak Gunung Rinjani 3.726 mdpl. Jelajahi Segara Anak dan danau kawah yang memukau.</p>
-                            <ul class="pkg-highlights">
-                                <li><i class="fas fa-campground me-1"></i>Tenda Camping</li>
-                                <li><i class="fas fa-hands-helping me-1"></i>Porter</li>
-                                <li><i class="fas fa-utensils me-1"></i>Makan 3x/hari</li>
-                                <li><i class="fas fa-first-aid me-1"></i>Rescue Kit</li>
-                            </ul>
-                            <div class="pkg-footer">
-                                <div class="pkg-price">
-                                    <span class="from">Mulai dari</span>
-                                    <span class="amount">Rp 2,5 Jt</span>
-                                    <span class="per">/orang</span>
-                                </div>
-                                <a href="{{ url('/packages/pendakian-rinjani') }}" class="btn-pkg">Detail →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="col-md-6 col-lg-4 fade-up package-item" data-cat="lombok" data-price="3200000" data-duration="5" style="transition-delay:.16s">
-                    <div class="package-card">
-                        <div class="package-img">
-                            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80" alt="Lombok Tour" loading="lazy" />
-                            <span class="pkg-badge pkg-badge-lombok">Lombok</span>
-                            <span class="pkg-duration"><i class="fas fa-moon me-1"></i>5H / 4M</span>
-                            <button class="pkg-wishlist" title="Simpan ke Wishlist"><i class="far fa-heart"></i></button>
-                        </div>
-                        <div class="package-body">
-                            <div class="pkg-rating">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                                <span>4.8 (71 ulasan)</span>
-                            </div>
-                            <h3>Lombok Lengkap Tour</h3>
-                            <p class="pkg-desc">Paket lengkap menjelajahi Lombok — Mandalika, Desa Sade, Air Terjun Sendang Gile, hingga tenun Sukarara.</p>
-                            <ul class="pkg-highlights">
-                                <li><i class="fas fa-hotel me-1"></i>Hotel Bintang 4</li>
-                                <li><i class="fas fa-car me-1"></i>AC Vehicle</li>
-                                <li><i class="fas fa-ticket-alt me-1"></i>Semua Entry</li>
-                                <li><i class="fas fa-camera me-1"></i>Dokumentasi</li>
-                            </ul>
-                            <div class="pkg-footer">
-                                <div class="pkg-price">
-                                    <span class="from">Mulai dari</span>
-                                    <span class="amount">Rp 3,2 Jt</span>
-                                    <span class="per">/orang</span>
-                                </div>
-                                <a href="{{ url('/packages/lombok-lengkap') }}" class="btn-pkg">Detail →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="col-md-6 col-lg-4 fade-up package-item" data-cat="lombok" data-price="4500000" data-duration="5" style="transition-delay:.08s">
-                    <div class="package-card">
-                        <div class="package-img">
-                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&q=80" alt="Senggigi Beach" loading="lazy" />
-                            <span class="pkg-badge pkg-badge-lombok">Lombok</span>
-                            <span class="pkg-duration"><i class="fas fa-moon me-1"></i>5H / 4M</span>
-                            <button class="pkg-wishlist" title="Simpan ke Wishlist"><i class="far fa-heart"></i></button>
-                            <div class="pkg-popular-badge" style="background: #0057B8;">💎 Premium</div>
-                        </div>
-                        <div class="package-body">
-                            <div class="pkg-rating">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                <span>4.9 (55 ulasan)</span>
-                            </div>
-                            <h3>Senggigi Luxury Escape</h3>
-                            <p class="pkg-desc">Pengalaman mewah di Senggigi dengan villa tepi pantai, spa, dan sunset cruise eksklusif.</p>
-                            <ul class="pkg-highlights">
-                                <li><i class="fas fa-star me-1"></i>Villa Bintang 5</li>
-                                <li><i class="fas fa-spa me-1"></i>Spa Treatment</li>
-                                <li><i class="fas fa-ship me-1"></i>Sunset Cruise</li>
-                                <li><i class="fas fa-concierge-bell me-1"></i>Butler Service</li>
-                            </ul>
-                            <div class="pkg-footer">
-                                <div class="pkg-price">
-                                    <span class="from">Mulai dari</span>
-                                    <span class="amount">Rp 4,5 Jt</span>
-                                    <span class="per">/orang</span>
-                                </div>
-                                <a href="{{ url('/packages/senggigi-luxury-escape') }}" class="btn-pkg">Detail →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 5 -->
-                <div class="col-md-6 col-lg-4 fade-up package-item" data-cat="sumbawa" data-price="2800000" data-duration="4" style="transition-delay:.1s">
-                    <div class="package-card">
-                        <div class="package-img">
-                            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=700&q=80" alt="Sumbawa" loading="lazy" />
-                            <span class="pkg-badge pkg-badge-sumbawa">Sumbawa</span>
-                            <span class="pkg-duration"><i class="fas fa-moon me-1"></i>4H / 3M</span>
-                            <button class="pkg-wishlist" title="Simpan ke Wishlist"><i class="far fa-heart"></i></button>
-                        </div>
-                        <div class="package-body">
-                            <div class="pkg-rating">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                                <span>4.7 (43 ulasan)</span>
-                            </div>
-                            <h3>Sumbawa Hidden Paradise</h3>
-                            <p class="pkg-desc">Temukan Sumbawa yang masih perawan — Pantai Maluk, Teluk Saleh, dan budaya Mbojo yang autentik.</p>
-                            <ul class="pkg-highlights">
-                                <li><i class="fas fa-home me-1"></i>Penginapan Lokal</li>
-                                <li><i class="fas fa-ship me-1"></i>Boat Charter</li>
-                                <li><i class="fas fa-fish me-1"></i>Snorkeling</li>
-                                <li><i class="fas fa-user-tie me-1"></i>Guide Lokal</li>
-                            </ul>
-                            <div class="pkg-footer">
-                                <div class="pkg-price">
-                                    <span class="from">Mulai dari</span>
-                                    <span class="amount">Rp 2,8 Jt</span>
-                                    <span class="per">/orang</span>
-                                </div>
-                                <a href="{{ url('/packages/sumbawa-paradise') }}" class="btn-pkg">Detail →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 6 -->
-                <div class="col-md-6 col-lg-4 fade-up package-item" data-cat="sumbawa" data-price="3500000" data-duration="3" style="transition-delay:.2s">
-                    <div class="package-card">
-                        <div class="package-img">
-                            <img src="https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=700&q=80" alt="Pulau Moyo" loading="lazy" />
-                            <span class="pkg-badge pkg-badge-sumbawa">Sumbawa</span>
-                            <span class="pkg-duration"><i class="fas fa-moon me-1"></i>3H / 2M</span>
-                            <button class="pkg-wishlist" title="Simpan ke Wishlist"><i class="far fa-heart"></i></button>
-                        </div>
-                        <div class="package-body">
-                            <div class="pkg-rating">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                <span>5.0 (62 ulasan)</span>
-                            </div>
-                            <h3>Pulau Moyo Retreat</h3>
-                            <p class="pkg-desc">Pulau Moyo — destinasi eksklusif pernah dikunjungi Lady Diana. Air terjun, diving, dan hutan tropis memukau.</p>
-                            <ul class="pkg-highlights">
-                                <li><i class="fas fa-campground me-1"></i>Glamping</li>
-                                <li><i class="fas fa-swimmer me-1"></i>Diving</li>
-                                <li><i class="fas fa-tint me-1"></i>Air Terjun</li>
-                                <li><i class="fas fa-sun me-1"></i>Sunset Tour</li>
-                            </ul>
-                            <div class="pkg-footer">
-                                <div class="pkg-price">
-                                    <span class="from">Mulai dari</span>
-                                    <span class="amount">Rp 3,5 Jt</span>
-                                    <span class="per">/orang</span>
-                                </div>
-                                <a href="{{ url('/packages/pulau-moyo') }}" class="btn-pkg">Detail →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 7 -->
-                <div class="col-md-6 col-lg-4 fade-up package-item" data-cat="sumbawa" data-price="2200000" data-duration="3" style="transition-delay:.3s">
-                    <div class="package-card">
-                        <div class="package-img">
-                            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700&q=80" alt="Pantai Maluk" loading="lazy" />
-                            <span class="pkg-badge pkg-badge-sumbawa">Sumbawa</span>
-                            <span class="pkg-duration"><i class="fas fa-moon me-1"></i>3H / 2M</span>
-                            <button class="pkg-wishlist" title="Simpan ke Wishlist"><i class="far fa-heart"></i></button>
-                        </div>
-                        <div class="package-body">
-                            <div class="pkg-rating">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
-                                <span>4.5 (38 ulasan)</span>
-                            </div>
-                            <h3>Surfing Pantai Maluk</h3>
-                            <p class="pkg-desc">Rasakan ombak kelas dunia di Supersuck, Pantai Maluk. Surga para surfer dari seluruh penjuru dunia.</p>
-                            <ul class="pkg-highlights">
-                                <li><i class="fas fa-water me-1"></i>Surfing Board</li>
-                                <li><i class="fas fa-chalkboard-teacher me-1"></i>Instruktur</li>
-                                <li><i class="fas fa-home me-1"></i>Penginapan</li>
-                                <li><i class="fas fa-utensils me-1"></i>Sarapan</li>
-                            </ul>
-                            <div class="pkg-footer">
-                                <div class="pkg-price">
-                                    <span class="from">Mulai dari</span>
-                                    <span class="amount">Rp 2,2 Jt</span>
-                                    <span class="per">/orang</span>
-                                </div>
-                                <a href="{{ url('/packages/surfing-pantai-maluk') }}" class="btn-pkg">Detail →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 8 -->
-                <div class="col-md-6 col-lg-4 fade-up package-item" data-cat="intl" data-price="8900000" data-duration="7" style="transition-delay:.1s">
-                    <div class="package-card">
-                        <div class="package-img">
-                            <img src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=700&q=80" alt="Thailand" loading="lazy" />
-                            <span class="pkg-badge pkg-badge-intl">Luar Negeri</span>
-                            <span class="pkg-duration"><i class="fas fa-moon me-1"></i>7H / 6M</span>
-                            <button class="pkg-wishlist" title="Simpan ke Wishlist"><i class="far fa-heart"></i></button>
-                            <div class="pkg-popular-badge">🔥 Terpopuler</div>
-                        </div>
-                        <div class="package-body">
-                            <div class="pkg-rating">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                <span>4.9 (201 ulasan)</span>
-                            </div>
-                            <h3>Thailand Grand Tour</h3>
-                            <p class="pkg-desc">Bangkok, Chiang Mai, dan Phuket dalam satu paket. Kuil megah, pasar apung, dan pantai Andaman yang jernih.</p>
-                            <ul class="pkg-highlights">
-                                <li><i class="fas fa-plane me-1"></i>Tiket PP</li>
-                                <li><i class="fas fa-hotel me-1"></i>Hotel Bintang 4</li>
-                                <li><i class="fas fa-user-tie me-1"></i>Guide Bahasa</li>
-                                <li><i class="fas fa-ticket-alt me-1"></i>Semua Masuk</li>
-                            </ul>
-                            <div class="pkg-footer">
-                                <div class="pkg-price">
-                                    <span class="from">Mulai dari</span>
-                                    <span class="amount">Rp 8,9 Jt</span>
-                                    <span class="per">/orang</span>
-                                </div>
-                                <a href="{{ url('/packages/thailand-tour') }}" class="btn-pkg">Detail →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 9 -->
-                <div class="col-md-6 col-lg-4 fade-up package-item" data-cat="intl" data-price="12500000" data-duration="9" style="transition-delay:.2s">
-                    <div class="package-card">
-                        <div class="package-img">
-                            <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=700&q=80" alt="Bali to Japan" loading="lazy" />
-                            <span class="pkg-badge pkg-badge-intl">Luar Negeri</span>
-                            <span class="pkg-duration"><i class="fas fa-moon me-1"></i>9H / 8M</span>
-                            <button class="pkg-wishlist" title="Simpan ke Wishlist"><i class="far fa-heart"></i></button>
-                            <div class="pkg-popular-badge" style="background: #0057B8;">💎 Premium</div>
-                        </div>
-                        <div class="package-body">
-                            <div class="pkg-rating">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                <span>4.9 (88 ulasan)</span>
-                            </div>
-                            <h3>Jepang Sakura Tour</h3>
-                            <p class="pkg-desc">Saksikan keajaiban mekar bunga sakura di Tokyo, Kyoto, dan Osaka. Budaya, kuliner, dan alam Jepang dalam satu perjalanan.</p>
-                            <ul class="pkg-highlights">
-                                <li><i class="fas fa-plane me-1"></i>Tiket PP</li>
-                                <li><i class="fas fa-hotel me-1"></i>Hotel Bintang 4+</li>
-                                <li><i class="fas fa-subway me-1"></i>JR Pass 7 Hari</li>
-                                <li><i class="fas fa-user-tie me-1"></i>Guide Lokal</li>
-                            </ul>
-                            <div class="pkg-footer">
-                                <div class="pkg-price">
-                                    <span class="from">Mulai dari</span>
-                                    <span class="amount">Rp 12,5 Jt</span>
-                                    <span class="per">/orang</span>
-                                </div>
-                                <a href="{{ url('/packages/jepang-sakura-tour') }}" class="btn-pkg">Detail →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                @endforeach
             </div>
 
             <!-- No Result State -->

@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     @yield('meta')
-    <title>{{ $title ?? 'WestTravel.id — Jelajahi Lombok, Sumbawa & Dunia' }}</title>
+    <title>{{ $title ?? 'West Travel Indonesia - Wander Without Worry' }}</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link
@@ -52,8 +52,8 @@
         <div class="container">
             <div class="row g-4 footer-top">
                 <div class="col-lg-4">
-                    <a href="/" class="brand" style="color:var(--dark); margin-bottom:1rem;">
-                        WestTravel<span>.id</span>
+                    <a href="/" class="brand" style="margin-bottom: 1.5rem; display: inline-block;">
+                        <img src="{{ asset('assets/img/logo.png') }}" alt="WestTravel.id" width="180">
                     </a>
                     <p style="color:var(--muted); font-size:0.95rem; line-height:1.7; margin-bottom:1.5rem;">
                         Spesialis perjalanan premium Anda untuk wilayah Nusa Tenggara dan destinasi internasional

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('country');
             $table->integer('price');
             $table->text('description');
-            $table->string('imges')->nullable();
+            $table->string('images')->nullable();
             $table->string('mobile_images')->nullable();
             $table->string('min_pax');
             $table->string('discount')->nullable();

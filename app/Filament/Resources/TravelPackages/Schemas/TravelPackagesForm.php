@@ -68,12 +68,14 @@ class TravelPackagesForm
                     ->label('Featured')
                     ->default(false),
                 FileUpload::make('images')
+                    ->disk('public')
                     ->required()
                     ->multiple()
                     ->image()
                     ->directory('travel-package-images')
                     ->maxSize(1024),
                 FileUpload::make('mobile_images')
+                    ->disk('public')
                     ->multiple()
                     ->image()
                     ->directory('travel-package-images-mobile')
